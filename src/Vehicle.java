@@ -1,5 +1,7 @@
 import java.util.Random;
 
+import java.util.Random;
+
 public class Vehicle {
     private Vec2 position;
     private Route route;
