@@ -28,8 +28,7 @@ public class WestLane extends BaseLane {
                 Vehicle v = vehicles.get(i);
                 float stoppingPosition = light.getPosition().x - ((i - pv) * Vehicle.vehicleSize * 2);
                 if (v.doz()) {
-                    pv++; 
-            System.out.println("ohhh");                   
+                    pv++;
                 }
                 if (light.getState() == LightState.GREEN || v.doz() ||
                         (light.getState() == LightState.RED && v.getPosition().x <= stoppingPosition)) {

@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 
 import processing.core.PApplet;
 
@@ -27,8 +26,8 @@ public class TrafficLights {
     private long lastUpdate;
     private long claculatedTime;
     private int current_idx = 4;
-    private int time = 1100;
-    
+    private int time = 1000;
+    private boolean all_red = true;
     private List<TrafficLight> turns;
 
     public void update(Routes routes) {
@@ -39,16 +38,27 @@ public class TrafficLights {
             });
             current_idx = 0;
         } else if ((System.currentTimeMillis() - lastUpdate) >= claculatedTime) {
-            TrafficLight currentLight = turns.get(current_idx);
-            int carCount = routes.getBaseLane(currentLight.getRoute()).vehiclesCount();
-            int[] all_cars = new int[]{0};
-            turns.forEach(t->{all_cars[0]+=routes.getBaseLane(t.getRoute()).vehiclesCount();System.out.println(all_cars[0]);});
-            claculatedTime = time * carCount/ ((all_cars[0]==0)?1:all_cars[0]);
-            current_idx++;
+            if (all_red) {
+                TrafficLight currentLight = turns.get(current_idx);
+                int carCount = routes.getBaseLane(currentLight.getRoute()).vehiclesCount();
+                int[] all_cars = new int[] { 0 };
+                turns.forEach(t -> {
+                    all_cars[0] += routes.getBaseLane(t.getRoute()).vehiclesCount();
+                });
+                claculatedTime = time * carCount / ((all_cars[0] == 0) ? 1 : all_cars[0]);
+                current_idx++;
+                turns.forEach(l -> {
+                    l.setState((claculatedTime != 0 && l.equals(currentLight)) ? LightState.GREEN : LightState.RED);
+                });
+            } else if (claculatedTime!=0) {
+                turns.forEach(l -> {
+                    l.setState(LightState.RED);
+                });
+                claculatedTime = 100;
+            }
+            all_red = !all_red;
             lastUpdate = System.currentTimeMillis();
-            turns.forEach(l -> {
-                l.setState((claculatedTime!=0&&l.equals(currentLight)) ? LightState.GREEN : LightState.RED);
-            });
+
         }
     }
 

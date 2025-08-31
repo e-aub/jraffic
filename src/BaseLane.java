@@ -27,11 +27,43 @@ public abstract class BaseLane {
         if (vehicles.size() == 0) {
             return vehicles;
         }
+
         List<Vehicle> carrr = new ArrayList<>();
+        Route r = vehicles.get(0).getRoute();
+        TrafficLight l = trafficLights.getLight(r);
+
         for (Vehicle vehicle : vehicles) {
             if (!vehicle.doz()) {
                 carrr.add(vehicle);
             }
+        }
+        if (carrr.size() == 0) {
+            return new ArrayList<>();
+        }
+        switch (r) {
+            case South:
+                if (carrr.get(0).getPosition().y < l.getPosition().y) {
+                    return new ArrayList<>();
+                }
+                break;
+            case North:
+                if (carrr.get(0).getPosition().y > l.getPosition().y) {
+                    return new ArrayList<>();
+                }
+                break;
+            case East:
+            System.out.println(carrr.get(0).getPosition().x );
+                if (carrr.get(0).getPosition().x > l.getPosition().x) {
+                    return new ArrayList<>();
+                }
+                break;
+            default:
+            System.out.println(carrr.get(0).getPosition().x );
+
+                if (carrr.get(0).getPosition().x < l.getPosition().x) {
+                    return new ArrayList<>();
+                }
+                break;
         }
         return carrr;
     }
