@@ -27,7 +27,7 @@ public class TrafficLights {
     private long lastUpdate;
     private long claculatedTime;
     private int current_idx = 4;
-    private int time = 1000;
+    private int time = 1100;
     
     private List<TrafficLight> turns;
 
@@ -41,7 +41,9 @@ public class TrafficLights {
         } else if ((System.currentTimeMillis() - lastUpdate) >= claculatedTime) {
             TrafficLight currentLight = turns.get(current_idx);
             int carCount = routes.getBaseLane(currentLight.getRoute()).vehiclesCount();
-            claculatedTime = time * carCount;
+            int[] all_cars = new int[]{0};
+            turns.forEach(t->{all_cars[0]+=routes.getBaseLane(t.getRoute()).vehiclesCount();System.out.println(all_cars[0]);});
+            claculatedTime = time * carCount/ ((all_cars[0]==0)?1:all_cars[0]);
             current_idx++;
             lastUpdate = System.currentTimeMillis();
             turns.forEach(l -> {

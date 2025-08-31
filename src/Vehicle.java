@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Vehicle {
     public final static Integer vehicleSize = 50;
-    private final static float speed =1 ;
+    private float speed =1;
     private Vec2 position;
     private boolean isMoving = true;
     private Direction direction;
@@ -13,7 +13,9 @@ public class Vehicle {
     public boolean doz() {
         return doz;
     }
-
+public void setSpeed(float speed) {
+    this.speed = speed;
+}
     public void setDoz(boolean doz) {
         this.doz = doz;
     }
@@ -69,6 +71,7 @@ public class Vehicle {
 
         if (intersects) {
             setDoz(true);
+            setSpeed(6);
         }
         this.position = position;
 
