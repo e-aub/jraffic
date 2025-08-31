@@ -2,7 +2,7 @@ import java.util.Random;
 
 public class Vehicle {
     public final static Integer vehicleSize = 50;
-    private final static float speed = 5/2 ;
+    private final static float speed =1 ;
     private Vec2 position;
     private boolean isMoving = true;
     private Direction direction;
@@ -57,10 +57,10 @@ public class Vehicle {
         float aTop = position.y;
         float aBottom = position.y + 50;
 
-        float bLeft = sx - 50;
-        float bRight = sx + 50;
-        float bTop = sy - 50;
-        float bBottom = sy + 50;
+        float bLeft = sx - 49;
+        float bRight = sx + 49;
+        float bTop = sy - 49;
+        float bBottom = sy + 49;
 
         boolean intersects = aLeft < bRight &&
                 aRight > bLeft &&

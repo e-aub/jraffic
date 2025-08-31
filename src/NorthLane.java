@@ -14,13 +14,17 @@ public class NorthLane extends BaseLane {
     @Override
     public void updateVehicles() {
         TrafficLight light = trafficLights.getLight(Route.North);
-
+        int pv = 0;
         for (int i = 0; i < vehicles.size(); i++) {
             Vehicle v = vehicles.get(i);
-            float stoppingPosition = light.getPosition().y + (i * Vehicle.vehicleSize * 2);
-
+            float stoppingPosition = light.getPosition().y + ((i - pv) * Vehicle.vehicleSize * 2);
+            if (v.doz()) {
+                pv++;
+            }
             if (light.getState() == LightState.GREEN || v.doz() ||
                     (light.getState() == LightState.RED && v.getPosition().y >= stoppingPosition)) {
+                        System.out.println(stoppingPosition);
+                        System.out.println(v.getPosition().y);
                 v.setPosition(new Vec2(v.getPosition().x, v.getPosition().y - v.getSpeed()));
             }
         }
