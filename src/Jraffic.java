@@ -21,6 +21,7 @@ public class Jraffic extends PApplet {
 
     public void draw() {
         background(0);
+        this.trafficLights.update();
         routes.update();
         routes.draw(this);
 
