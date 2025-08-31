@@ -11,7 +11,7 @@ public class WestLane extends BaseLane {
         System.out.println("Current vehicles count: " + vehicles.size());
         
         if (canSpawnAt()) {
-            vehicles.add(new Vehicle(this.spawnPosition));
+            vehicles.add(new Vehicle(this.spawnPosition, Route.West));
             System.out.println("Vehicle added! New count: " + vehicles.size());
         } else {
             System.out.println("Cannot spawn - blocked by canSpawnAt()");

@@ -41,12 +41,18 @@ public class Routes {
         }
     }
 
+    public List<BaseLane> getRoutes(){
+        return this.lanes;
+    }
+
     public void update() {
        for (int i = 0; i < lanes.size(); i++) {
         BaseLane lane = lanes.get(i);
         // System.out.println("Updating lane " + i + ": " + lane.getClass().getSimpleName());
         lane.updateVehicles();
-    }
+        }
+        // Here we should delete the turning logic and implement for each lane its turning logic;
+
         // Iterator<Vehicle> it = northLane.getVehicles().iterator();
         // while (it.hasNext()) {
         //     Vehicle v = it.next();

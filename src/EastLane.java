@@ -7,7 +7,7 @@ public class EastLane extends BaseLane {
     @Override
     public void spawnVehicle() {
         if (canSpawnAt()){
-            vehicles.add(new Vehicle(this.spawnPosition));
+            vehicles.add(new Vehicle(this.spawnPosition, Route.East));
         } 
     }
 

@@ -6,12 +6,14 @@ public class Vehicle {
     private Vec2 position;
     private boolean isMoving = true;
     private Direction direction;
+    private Route route;
     private boolean hasTurned = false;
 
-    public Vehicle(Vec2 position) {
+    public Vehicle(Vec2 position, Route route) {
         this.position = position;
         Random rand = new Random();
         int index = rand.nextInt(3);
+        this.route = route;
 
         switch (index) {
             case 0:
@@ -23,6 +25,10 @@ public class Vehicle {
             default:
                 direction = Direction.Straight;
         }
+    }
+
+    public Route getRoute(){
+        return this.route;
     }
 
     public Direction getDirection() {
