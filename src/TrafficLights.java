@@ -45,7 +45,7 @@ public class TrafficLights {
             current_idx++;
             lastUpdate = System.currentTimeMillis();
             turns.forEach(l -> {
-                l.setState(/*(claculatedTime!=0&&l.equals(currentLight)) ? LightState.GREEN :*/ LightState.RED);
+                l.setState((claculatedTime!=0&&l.equals(currentLight)) ? LightState.GREEN : LightState.RED);
             });
         }
     }
