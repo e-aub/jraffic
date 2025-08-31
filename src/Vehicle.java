@@ -2,12 +2,21 @@ import java.util.Random;
 
 public class Vehicle {
     public final static Integer vehicleSize = 50;
-    private final static float speed = 1;
+    private final static float speed = 5/2 ;
     private Vec2 position;
     private boolean isMoving = true;
     private Direction direction;
     private Route route;
     private boolean hasTurned = false;
+    private boolean doz = false;
+
+    public boolean doz() {
+        return doz;
+    }
+
+    public void setDoz(boolean doz) {
+        this.doz = doz;
+    }
 
     public Vehicle(Vec2 position, Route route) {
         this.position = position;
@@ -27,7 +36,7 @@ public class Vehicle {
         }
     }
 
-    public Route getRoute(){
+    public Route getRoute() {
         return this.route;
     }
 
@@ -39,9 +48,30 @@ public class Vehicle {
         return position;
     }
 
-   
     public void setPosition(Vec2 position) {
+        // Square A (50px)
+        float sx = 1000 / 2;
+        float sy = 1000 / 2;
+        float aLeft = position.x;
+        float aRight = position.x + 50;
+        float aTop = position.y;
+        float aBottom = position.y + 50;
+
+        float bLeft = sx - 50;
+        float bRight = sx + 50;
+        float bTop = sy - 50;
+        float bBottom = sy + 50;
+
+        boolean intersects = aLeft < bRight &&
+                aRight > bLeft &&
+                aTop < bBottom &&
+                aBottom > bTop;
+
+        if (intersects) {
+            setDoz(true);
+        }
         this.position = position;
+
     }
 
     public float getSpeed() {
@@ -56,11 +86,11 @@ public class Vehicle {
         this.isMoving = isMoving;
     }
 
-    public boolean hasTurned(){
+    public boolean hasTurned() {
         return this.hasTurned;
     }
 
-    public void setTurned(boolean bool){
+    public void setTurned(boolean bool) {
         this.hasTurned = bool;
     }
 }

@@ -1,6 +1,8 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import processing.core.PApplet;
 
@@ -8,28 +10,51 @@ public class TrafficLights {
     private Map<Route, TrafficLight> lights = new HashMap<>();
 
     public TrafficLights(Integer width, Integer height) {
-        lights.put(Route.North, new TrafficLight(new Vec2((width / 2) + 50, (height / 2) + 50), LightState.RED));
-        lights.put(Route.South, new TrafficLight(new Vec2((width / 2) - 100, (height / 2) - 100), LightState.RED));
-        lights.put(Route.East, new TrafficLight(new Vec2((width / 2) + 50, (height / 2) - 100), LightState.RED));
-        lights.put(Route.West, new TrafficLight(new Vec2((width / 2) - 100, (height / 2) + 50), LightState.RED));
+        lights.put(Route.North,
+                new TrafficLight(new Vec2((width / 2) + 50, (height / 2) + 50), LightState.RED, Route.North));
+        lights.put(Route.South,
+                new TrafficLight(new Vec2((width / 2) - 100, (height / 2) - 100), LightState.RED, Route.South));
+        lights.put(Route.East,
+                new TrafficLight(new Vec2((width / 2) + 50, (height / 2) - 100), LightState.RED, Route.East));
+        lights.put(Route.West,
+                new TrafficLight(new Vec2((width / 2) - 100, (height / 2) + 50), LightState.RED, Route.West));
     }
 
     public Map<Route, TrafficLight> getLights() {
         return lights;
     }
 
-    public void update(Routes routes){
-        for (BaseLane route : routes.getRoutes()){
-            route.getVehicles();
-            // Here We should implement algorithm
+    private long lastUpdate;
+    private long claculatedTime;
+    private int current_idx = 4;
+    private int time = 1000;
+    
+    private List<TrafficLight> turns;
+
+    public void update(Routes routes) {
+        if (current_idx == 4) {
+            turns = new ArrayList<>();
+            getLights().values().forEach((v) -> {
+                turns.add(v);
+            });
+            current_idx = 0;
+        } else if ((System.currentTimeMillis() - lastUpdate) >= claculatedTime) {
+            TrafficLight currentLight = turns.get(current_idx);
+            int carCount = routes.getBaseLane(currentLight.getRoute()).vehiclesCount();
+            claculatedTime = time * carCount;
+            current_idx++;
+            lastUpdate = System.currentTimeMillis();
+            turns.forEach(l -> {
+                l.setState((claculatedTime!=0&&l.equals(currentLight)) ? LightState.GREEN : LightState.RED);
+            });
         }
     }
 
-    public TrafficLight getLight(Route route){
+    public TrafficLight getLight(Route route) {
         return lights.get(route);
     }
 
-    public LightState getLightState(Route route){
+    public LightState getLightState(Route route) {
         return this.lights.get(route).getState();
     }
 
@@ -48,7 +73,7 @@ public class TrafficLights {
 
     }
 
-    public void draw(PApplet app){
+    public void draw(PApplet app) {
         for (Map.Entry<Route, TrafficLight> entry : this.lights.entrySet()) {
             TrafficLight light = entry.getValue();
             if (light.getState() == LightState.RED) {

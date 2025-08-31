@@ -23,6 +23,19 @@ public class Routes {
         lanes = Arrays.asList(northLane, southLane, westLane, eastLane);
     }
 
+    public BaseLane getBaseLane(Route r) {
+        switch (r) {
+            case South:
+                return southLane;
+            case West:
+                return westLane;
+            case East:
+                return eastLane;
+            default:
+                return northLane;
+        }
+    }
+
     public void spawnVehicle(Route route) {
         switch (route) {
             case North -> northLane.spawnVehicle();
@@ -41,93 +54,95 @@ public class Routes {
         }
     }
 
-    public List<BaseLane> getRoutes(){
+    public List<BaseLane> getRoutes() {
         return this.lanes;
     }
 
     public void update() {
-       for (int i = 0; i < lanes.size(); i++) {
-        BaseLane lane = lanes.get(i);
-        // System.out.println("Updating lane " + i + ": " + lane.getClass().getSimpleName());
-        lane.updateVehicles();
+        for (int i = 0; i < lanes.size(); i++) {
+            BaseLane lane = lanes.get(i);
+            // System.out.println("Updating lane " + i + ": " +
+            // lane.getClass().getSimpleName());
+            lane.updateVehicles();
         }
-        // Here we should delete the turning logic and implement for each lane its turning logic;
+        // Here we should delete the turning logic and implement for each lane its
+        // turning logic;
 
-        // Iterator<Vehicle> it = northLane.getVehicles().iterator();
-        // while (it.hasNext()) {
-        //     Vehicle v = it.next();
-        //     if (!v.hasTurned()) {
-        //         if (v.getDirection() == Direction.Right && v.getPosition().y == 500) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             westLane.receiveVehicle(v);
-        //         } else if (v.getDirection() == Direction.Left && v.getPosition().y == 450) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             eastLane.receiveVehicle(v);
-        //         }
-        //     }
-        //         if (v.getPosition().y < Vehicle.vehicleSize * -1) {
-        //             it.remove();
-        //         }
-        // }
+        Iterator<Vehicle> it = northLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    westLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    eastLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().y < Vehicle.vehicleSize * -1) {
+                it.remove();
+            }
+        }
 
-        // it = southLane.getVehicles().iterator();
-        // while (it.hasNext()) {
-        //     Vehicle v = it.next();
-        //     if (!v.hasTurned()) {
-        //         if (v.getDirection() == Direction.Right && v.getPosition().y == 450) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             eastLane.receiveVehicle(v);
-        //         } else if (v.getDirection() == Direction.Left && v.getPosition().y == 500) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             westLane.receiveVehicle(v);
-        //         }
-        //     }
-        //     if (v.getPosition().y > height + Vehicle.vehicleSize) {
-        //         it.remove();
-        //     }
-        // }
+        it = southLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    eastLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    westLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().y > height + Vehicle.vehicleSize) {
+                it.remove();
+            }
+        }
 
-        // it = eastLane.getVehicles().iterator();
-        // while (it.hasNext()) {
-        //     Vehicle v = it.next();
-        //     if (!v.hasTurned()) {
-        //         if (v.getDirection() == Direction.Right && v.getPosition().x == 500) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             northLane.receiveVehicle(v);
-        //         } else if (v.getDirection() == Direction.Left && v.getPosition().x == 450) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             southLane.receiveVehicle(v);
-        //         }
-        //     }
-        //     if (v.getPosition().x > width + Vehicle.vehicleSize){
-        //         it.remove();
-        //     }
-        // }
+        it = eastLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    northLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    southLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().x > width + Vehicle.vehicleSize) {
+                it.remove();
+            }
+        }
 
-        // it = westLane.getVehicles().iterator();
-        // while (it.hasNext()) {
-        //     Vehicle v = it.next();
-        //     if (!v.hasTurned()) {
-        //         if (v.getDirection() == Direction.Right && v.getPosition().x == 450) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             southLane.receiveVehicle(v);
-        //         } else if (v.getDirection() == Direction.Left && v.getPosition().x == 500) {
-        //             v.setTurned(true);
-        //             it.remove();
-        //             northLane.receiveVehicle(v);
-        //         }
-        //     }
-        //     if (v.getPosition().x < Vehicle.vehicleSize * -1){
-        //         it.remove();
-        //     }
-        // }
+        it = westLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    southLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    northLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().x < Vehicle.vehicleSize * -1) {
+                it.remove();
+            }
+        }
     }
 
     public void draw(PApplet app) {

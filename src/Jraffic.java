@@ -32,7 +32,7 @@ public class Jraffic extends PApplet {
     public void keyPressed() {
         Route route = null;
 
-        if (key == ' ') {
+        if (key == 'r') {
             route = Route.values()[new Random().nextInt(4)];
         } else if (key == CODED) {
             System.out.println(key);

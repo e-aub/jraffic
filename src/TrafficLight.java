@@ -2,12 +2,15 @@
 public class TrafficLight {
     private Vec2 position;
     private LightState state;
-    // private Route route;
+    private Route route;
+    public Route getRoute() {
+        return route;
+    }
 
-    public TrafficLight(Vec2 position, LightState state) {
+    public TrafficLight(Vec2 position, LightState state,Route route) {
         this.position = position;
         this.state = state;
-        // this.route = route;
+        this.route = route;
     }
 
     public Vec2 getPosition() {

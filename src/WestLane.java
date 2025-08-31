@@ -29,7 +29,7 @@ public class WestLane extends BaseLane {
                 
                 float stoppingPosition = light.getPosition().x - (i * Vehicle.vehicleSize * 2);
                 
-                if (light.getState() == LightState.GREEN || 
+                if (light.getState() == LightState.GREEN || v.doz()||
                     (light.getState() == LightState.RED && v.getPosition().x <= stoppingPosition)) {
                     v.setPosition(new Vec2(v.getPosition().x + v.getSpeed(), v.getPosition().y));
                 }
