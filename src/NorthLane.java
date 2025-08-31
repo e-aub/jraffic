@@ -15,15 +15,17 @@ public class NorthLane extends BaseLane {
 
     @Override
     public void updateVehicles() {
-        TrafficLight light = trafficLights.getLight(Route.North);
-
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle v = vehicles.get(i);
-             if (light.getState() == LightState.GREEN || (light.getState() == LightState.RED && (v.getPosition().y >= light.getPosition().y))){
-                    v.setPosition(new Vec2(v.getPosition().x, v.getPosition().y - v.getSpeed()));
-                }
-
-            
+    TrafficLight light = trafficLights.getLight(Route.North);
+    
+    
+    for (int i = 0; i < vehicles.size(); i++) {
+        Vehicle v = vehicles.get(i);
+        float stoppingPosition = light.getPosition().y + (i * Vehicle.vehicleSize * 2);
+        
+        if (light.getState() == LightState.GREEN || 
+            (light.getState() == LightState.RED && v.getPosition().y >= stoppingPosition)) {
+            v.setPosition(new Vec2(v.getPosition().x, v.getPosition().y - v.getSpeed()));
         }
     }
+}
 }

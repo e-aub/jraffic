@@ -13,15 +13,18 @@ public class EastLane extends BaseLane {
 
 
     @Override
-    public void updateVehicles() {
-        TrafficLight light = trafficLights.getLight(Route.East);
-
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle v = vehicles.get(i);
-
-            if (light.getState() == LightState.GREEN || (light.getState() == LightState.RED && v.getPosition().x <= light.getPosition().x)) {
-                v.setPosition(new Vec2(v.getPosition().x - v.getSpeed(), v.getPosition().y));
-            }
+   public void updateVehicles() {
+    TrafficLight light = trafficLights.getLight(Route.East);
+    
+    for (int i = 0; i < vehicles.size(); i++) {
+        Vehicle v = vehicles.get(i);
+        
+        float stoppingPosition = light.getPosition().x + (i * Vehicle.vehicleSize * 2);
+        
+        if (light.getState() == LightState.GREEN || 
+            (light.getState() == LightState.RED && v.getPosition().x >= stoppingPosition)) {
+            v.setPosition(new Vec2(v.getPosition().x - v.getSpeed(), v.getPosition().y));
         }
     }
+}
 }

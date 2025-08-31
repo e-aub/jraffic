@@ -6,20 +6,36 @@ public class WestLane extends BaseLane {
 
     @Override
     public void spawnVehicle() {
-        if (canSpawnAt()){
+        System.out.println("WestLane.spawnVehicle() called!");
+        System.out.println("canSpawnAt(): " + canSpawnAt());
+        System.out.println("Current vehicles count: " + vehicles.size());
+        
+        if (canSpawnAt()) {
             vehicles.add(new Vehicle(this.spawnPosition));
-        } 
+            System.out.println("Vehicle added! New count: " + vehicles.size());
+        } else {
+            System.out.println("Cannot spawn - blocked by canSpawnAt()");
+        }
     }
-
+        
     @Override
     public void updateVehicles() {
-        TrafficLight light = trafficLights.getLight(Route.West);
-
-        for (int i = 0; i < vehicles.size(); i++) {
-            Vehicle v = vehicles.get(i);
-             if (light.getState() == LightState.GREEN || (light.getState() == LightState.RED && v.getPosition().x >= light.getPosition().x)) {
-                v.setPosition(new Vec2(v.getPosition().x + v.getSpeed(), v.getPosition().y));
+        try {
+            TrafficLight light = trafficLights.getLight(Route.West);
+            
+            
+            for (int i = 0; i < vehicles.size(); i++) {
+                Vehicle v = vehicles.get(i);
+                
+                float stoppingPosition = light.getPosition().x - (i * Vehicle.vehicleSize * 2);
+                
+                if (light.getState() == LightState.GREEN || 
+                    (light.getState() == LightState.RED && v.getPosition().x <= stoppingPosition)) {
+                    v.setPosition(new Vec2(v.getPosition().x + v.getSpeed(), v.getPosition().y));
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
