@@ -1,8 +1,8 @@
 public class Vec2 {
-    public double x;
-    public double y;
+    public float x;
+    public float y;
 
-    public Vec2(double x, double y) {
+    public Vec2(float x, float y) {
         this.x = x;
         this.y = y;
     }

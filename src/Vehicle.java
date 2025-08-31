@@ -1,16 +1,15 @@
 import java.util.Random;
 
 public class Vehicle {
+    public final static Integer vehicleSize = 50;
+    private final static float speed = 1;
     private Vec2 position;
-    private Route route;
-    private final double speed = 1.0;
     private boolean isMoving = true;
     private Direction direction;
     private boolean hasTurned = false;
 
-    public Vehicle(Vec2 position, Route route) {
+    public Vehicle(Vec2 position) {
         this.position = position;
-        this.route = route;
         Random rand = new Random();
         int index = rand.nextInt(3);
 
@@ -34,91 +33,12 @@ public class Vehicle {
         return position;
     }
 
-    public void checkTourne() {
-        if (hasTurned) {
-            return;
-        }
-        Vec2 pos = getPosition();
-        double x = pos.x;
-        double y = pos.y;
-
-        switch (direction) {
-            case Right: {
-                switch (route) {
-                    case North:
-                        if (y == 500) {
-                            route = Route.West;
-                            hasTurned = true;
-                        }
-                        break;
-                    case South:
-                        if (y == 450) {
-                            route = Route.East;
-                            hasTurned = true;
-                        }
-                        break;
-                    case East:
-                        if (x == 500) {
-                            route = Route.North;
-                            hasTurned = true;
-                        }
-                        break;
-                    default:
-                        if (x == 450) {
-                            route = Route.South;
-                            hasTurned = true;
-                        }
-                        break;
-                }
-                break;
-            }
-            case Left: {
-                switch (route) {
-                    case North:
-                        if (y == 450) {
-                            route = Route.East;
-                            hasTurned = true;
-                        }
-                        break;
-                    case South:
-                        if (y == 500) {
-                            route = Route.West;
-                            hasTurned = true;
-                        }
-                        break;
-                    case East:
-                        if (x == 450) {
-                            route = Route.South;
-                            hasTurned = true;
-                        }
-                        break;
-                    default:
-                        if (x == 500) {
-                            route = Route.North;
-                            hasTurned = true;
-                        }
-                        break;
-                }
-                break;
-            }
-
-        }
-
-    }
-
+   
     public void setPosition(Vec2 position) {
         this.position = position;
     }
 
-    public Route getRoute() {
-        return route;
-    }
-
-    public void setRoute(Route route) {
-        this.route = route;
-    }
-
-    public double getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
@@ -128,5 +48,13 @@ public class Vehicle {
 
     public void setMoving(boolean isMoving) {
         this.isMoving = isMoving;
+    }
+
+    public boolean hasTurned(){
+        return this.hasTurned;
+    }
+
+    public void setTurned(boolean bool){
+        this.hasTurned = bool;
     }
 }
