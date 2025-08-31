@@ -1,9 +1,10 @@
 import java.util.Random;
 
 public class Vehicle {
+    public final static Integer vehicleSize = 50;
+    private final static double speed = 1.0;
     private Vec2 position;
     private Route route;
-    private final double speed = 1.0;
     private boolean isMoving = true;
     private Direction direction;
     private boolean hasTurned = false;

@@ -75,19 +75,6 @@ public class Jraffic extends PApplet {
         }
     }
 
-    // public void rectM() {
-    // trafficLights.add(new TrafficLight(new Vec2((width / 2) + 50, (height / 2) +
-    // 50), LightState.RED, Route.North));
-    // trafficLights
-    // .add(new TrafficLight(new Vec2((width / 2) - 100, (height / 2) - 100),
-    // LightState.RED, Route.South));
-    // trafficLights.add(new TrafficLight(new Vec2((width / 2) + 50, (height / 2) -
-    // 100), LightState.RED, Route.East));
-    // trafficLights.add(new TrafficLight(new Vec2((width / 2) - 100, (height / 2) +
-    // 50), LightState.RED, Route.West));
-
-    // }
-
     public void road() {
         stroke(255);
         line(0, height / 2, width, height / 2);
