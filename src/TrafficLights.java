@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import processing.core.PApplet;
@@ -15,6 +16,13 @@ public class TrafficLights {
 
     public Map<Route, TrafficLight> getLights() {
         return lights;
+    }
+
+    public void update(Routes routes){
+        for (BaseLane route : routes.getRoutes()){
+            route.getVehicles();
+            // Here We should implement algorithm
+        }
     }
 
     public TrafficLight getLight(Route route){
