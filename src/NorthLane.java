@@ -1,7 +1,7 @@
 public class NorthLane extends BaseLane {
     public NorthLane(float width, float height, TrafficLights trafficLights) {
         super(width, height, trafficLights);
-        this.spawnPosition = new Vec2(width / 2, height - 50);
+        this.spawnPosition = new Vec2(width / 2, height - Vehicle.vehicleSize);
     }
 
     @Override

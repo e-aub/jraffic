@@ -86,7 +86,7 @@ public abstract class BaseLane {
             }
             float x = v.getPosition().x;
             float y = v.getPosition().y;
-            if (x < -50 || y < -50 || y > 1050 || x > 1050) {
+            if (x < -50 || y < -50 || y > 700*1.02 || x > 700*1.02) {
                 vehicles.remove(i);
                 i--;
                 continue;

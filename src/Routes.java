@@ -72,11 +72,11 @@ public class Routes {
         while (it.hasNext()) {
             Vehicle v = it.next();
             if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().y == 500) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y ==700 / 2) {
                     v.setTurned(true);
                     it.remove();
                     westLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 450) {
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 700/2 - Vehicle.vehicleSize) {
                     v.setTurned(true);
                     it.remove();
                     eastLane.receiveVehicle(v);
@@ -91,11 +91,11 @@ public class Routes {
         while (it.hasNext()) {
             Vehicle v = it.next();
             if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().y == 450) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y == 700/2 - Vehicle.vehicleSize) {
                     v.setTurned(true);
                     it.remove();
                     eastLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 500) {
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 700/2) {
                     v.setTurned(true);
                     it.remove();
                     westLane.receiveVehicle(v);
@@ -110,11 +110,11 @@ public class Routes {
         while (it.hasNext()) {
             Vehicle v = it.next();
             if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().x == 500) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == width/2 ) {
                     v.setTurned(true);
                     it.remove();
                     northLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().x == 450) {
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == width/2 - Vehicle.vehicleSize) {
                     v.setTurned(true);
                     it.remove();
                     southLane.receiveVehicle(v);
@@ -129,11 +129,11 @@ public class Routes {
         while (it.hasNext()) {
             Vehicle v = it.next();
             if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().x == 450) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == width/2 - Vehicle.vehicleSize) {
                     v.setTurned(true);
                     it.remove();
                     southLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().x == 500) {
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == width/2 ) {
                     v.setTurned(true);
                     it.remove();
                     northLane.receiveVehicle(v);
@@ -149,10 +149,10 @@ public class Routes {
         app.stroke(255);
         app.line(0, height / 2, width, height / 2);
         app.line(width / 2, 0, width / 2, height);
-        app.line(0, (height / 2) + 50, width, (height / 2) + 50);
-        app.line(0, (height / 2) - 50, width, (height / 2) - 50);
-        app.line((width / 2) + 50, 0, (width / 2) + 50, height);
-        app.line((width / 2) - 50, 0, (width / 2) - 50, height);
+        app.line(0, (height / 2) + Vehicle.vehicleSize, width, (height / 2) + Vehicle.vehicleSize);
+        app.line(0, (height / 2) - Vehicle.vehicleSize, width, (height / 2) - Vehicle.vehicleSize);
+        app.line((width / 2) + Vehicle.vehicleSize, 0, (width / 2) + Vehicle.vehicleSize, height);
+        app.line((width / 2) - Vehicle.vehicleSize, 0, (width / 2) - Vehicle.vehicleSize, height);
         app.fill(255, 0, 0);
         for (BaseLane lane : lanes)
             lane.drawVehicles(app);

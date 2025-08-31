@@ -3,6 +3,4 @@ public enum Route {
     South,
     East,
     West;
-
-    
 }

@@ -10,13 +10,13 @@ public class TrafficLights {
 
     public TrafficLights(Integer width, Integer height) {
         lights.put(Route.North,
-                new TrafficLight(new Vec2((width / 2) + 50, (height / 2) + 50), LightState.RED, Route.North));
+                new TrafficLight(new Vec2((width / 2) + Vehicle.vehicleSize, (height / 2) + Vehicle.vehicleSize), LightState.RED, Route.North));
         lights.put(Route.South,
-                new TrafficLight(new Vec2((width / 2) - 100, (height / 2) - 100), LightState.RED, Route.South));
+                new TrafficLight(new Vec2((width / 2) - Vehicle.vehicleSize*2, (height / 2) - Vehicle.vehicleSize*2), LightState.RED, Route.South));
         lights.put(Route.East,
-                new TrafficLight(new Vec2((width / 2) + 50, (height / 2) - 100), LightState.RED, Route.East));
+                new TrafficLight(new Vec2((width / 2) + Vehicle.vehicleSize, (height / 2) - Vehicle.vehicleSize*2), LightState.RED, Route.East));
         lights.put(Route.West,
-                new TrafficLight(new Vec2((width / 2) - 100, (height / 2) + 50), LightState.RED, Route.West));
+                new TrafficLight(new Vec2((width / 2) - Vehicle.vehicleSize*2, (height / 2) + Vehicle.vehicleSize), LightState.RED, Route.West));
     }
 
     public Map<Route, TrafficLight> getLights() {
@@ -26,7 +26,7 @@ public class TrafficLights {
     private long lastUpdate;
     private long claculatedTime;
     private int current_idx = 4;
-    private int time = 1000;
+    private int time = 700;
     private boolean all_red = true;
     private List<TrafficLight> turns;
 
@@ -93,7 +93,7 @@ public class TrafficLights {
             } else {
                 app.fill(0, 255, 0);
             }
-            app.rect((float) light.getPosition().x, (float) light.getPosition().y, 50, 50);
+            app.rect((float) light.getPosition().x, (float) light.getPosition().y, Vehicle.vehicleSize, Vehicle.vehicleSize);
         }
     }
 

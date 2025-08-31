@@ -1,7 +1,7 @@
 public class EastLane extends BaseLane {
     public EastLane(float width, float height, TrafficLights trafficLights) {
         super(width, height, trafficLights);
-        spawnPosition = new Vec2(width - 50, height / 2 - Vehicle.vehicleSize);
+        spawnPosition = new Vec2(width - Vehicle.vehicleSize, height / 2 - Vehicle.vehicleSize);
     }
 
     @Override

@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Vehicle {
-    public final static Integer vehicleSize = 50;
-    private float speed =1;
+    public final static Integer vehicleSize = 30;
+    private final float speed =3;
     private Vec2 position;
     private boolean isMoving = true;
     private Direction direction;
@@ -13,9 +13,6 @@ public class Vehicle {
     public boolean doz() {
         return doz;
     }
-public void setSpeed(float speed) {
-    this.speed = speed;
-}
     public void setDoz(boolean doz) {
         this.doz = doz;
     }
@@ -52,17 +49,17 @@ public void setSpeed(float speed) {
 
     public void setPosition(Vec2 position) {
         // Square A (50px)
-        float sx = 1000 / 2;
-        float sy = 1000 / 2;
+        float sx = 700 / 2;
+        float sy = 700 / 2;
         float aLeft = position.x;
-        float aRight = position.x + 50;
+        float aRight = position.x + vehicleSize;
         float aTop = position.y;
-        float aBottom = position.y + 50;
+        float aBottom = position.y + vehicleSize;
 
-        float bLeft = sx - 49;
-        float bRight = sx + 49;
-        float bTop = sy - 49;
-        float bBottom = sy + 49;
+        float bLeft = sx - (vehicleSize-speed);
+        float bRight = sx + (vehicleSize-speed);
+        float bTop = sy - (vehicleSize-speed);
+        float bBottom = sy + (vehicleSize-speed);
 
         boolean intersects = aLeft < bRight &&
                 aRight > bLeft &&
@@ -71,7 +68,7 @@ public void setSpeed(float speed) {
 
         if (intersects) {
             setDoz(true);
-            setSpeed(6);
+            // setSpeed(6);
         }
         this.position = position;
 
