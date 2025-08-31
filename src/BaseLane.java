@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseLane {
+    public Vec2 spawnPosition;
     protected List<Vehicle> vehicles = new ArrayList<>();
     public TrafficLights trafficLights;
     public final float width;
@@ -24,6 +25,10 @@ public abstract class BaseLane {
 
     public abstract void updateVehicles();
 
+    public void receiveVehicle(Vehicle v) {
+        vehicles.add(v);
+    }
+
     public void drawVehicles(PApplet app) {
     for (Vehicle v : vehicles) {
         switch (v.getDirection()) {
@@ -34,5 +39,17 @@ public abstract class BaseLane {
         app.rect((float) v.getPosition().x, (float) v.getPosition().y, Vehicle.vehicleSize, Vehicle.vehicleSize);
 
     }
-}
+    
+    }
+
+    public boolean canSpawnAt() {
+            float minDistance = Vehicle.vehicleSize * 2;
+            for (Vehicle v : vehicles) {
+                float d = (float) Math.hypot(this.spawnPosition.x - v.getPosition().x, this.spawnPosition.y - v.getPosition().y);
+                if (d < minDistance) {
+                    return false;
+                }
+            }
+            return true;
+        }
 }

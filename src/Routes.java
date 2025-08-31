@@ -17,8 +17,8 @@ public class Routes {
 
         northLane = new NorthLane(width, height, lights);
         southLane = new SouthLane(width, height, lights);
-        eastLane  = new EastLane(width, height, lights);
-        westLane  = new WestLane(width, height, lights);
+        eastLane = new EastLane(width, height, lights);
+        westLane = new WestLane(width, height, lights);
 
         lanes = Arrays.asList(northLane, southLane, eastLane, westLane);
     }
@@ -27,8 +27,8 @@ public class Routes {
         switch (route) {
             case North -> northLane.spawnVehicle();
             case South -> southLane.spawnVehicle();
-            case East  -> eastLane.spawnVehicle();
-            case West  -> westLane.spawnVehicle();
+            case East -> eastLane.spawnVehicle();
+            case West -> westLane.spawnVehicle();
         }
     }
 
@@ -36,13 +36,90 @@ public class Routes {
         switch (route) {
             case North -> northLane.spawnVehicle();
             case South -> southLane.spawnVehicle();
-            case East  -> eastLane.spawnVehicle();
-            case West  -> westLane.spawnVehicle();
+            case East -> eastLane.spawnVehicle();
+            case West -> westLane.spawnVehicle();
         }
     }
 
     public void update() {
-        for (BaseLane lane : lanes) lane.updateVehicles();
+        for (BaseLane lane : lanes)
+            lane.updateVehicles();
+
+        Iterator<Vehicle> it = northLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    westLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    eastLane.receiveVehicle(v);
+                }
+            }
+                if (v.getPosition().y < Vehicle.vehicleSize * -1) {
+                    it.remove();
+                }
+        }
+
+        it = southLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    eastLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    westLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().y > height + Vehicle.vehicleSize) {
+                it.remove();
+            }
+        }
+
+        it = eastLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    northLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    southLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().x > width + Vehicle.vehicleSize){
+                it.remove();
+            }
+        }
+
+        it = westLane.getVehicles().iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == 450) {
+                    v.setTurned(true);
+                    it.remove();
+                    southLane.receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == 500) {
+                    v.setTurned(true);
+                    it.remove();
+                    northLane.receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().x < Vehicle.vehicleSize * -1){
+                it.remove();
+            }
+        }
     }
 
     public void draw(PApplet app) {
@@ -54,6 +131,7 @@ public class Routes {
         app.line((width / 2) + 50, 0, (width / 2) + 50, height);
         app.line((width / 2) - 50, 0, (width / 2) - 50, height);
         app.fill(255, 0, 0);
-        for (BaseLane lane : lanes) lane.drawVehicles(app);
+        for (BaseLane lane : lanes)
+            lane.drawVehicles(app);
     }
 }
