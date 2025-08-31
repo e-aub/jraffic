@@ -26,7 +26,7 @@ public class TrafficLights {
     private long lastUpdate;
     private long claculatedTime;
     private int current_idx = 4;
-    private int time = 700;
+    private int time = 1100;
     private boolean all_red = true;
     private List<TrafficLight> turns;
 

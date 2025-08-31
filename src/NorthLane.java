@@ -22,7 +22,7 @@ public class NorthLane extends BaseLane {
                 pv++;
             }
             if (light.getState() == LightState.GREEN || v.doz() ||
-                    (light.getState() == LightState.RED && v.getPosition().y >= stoppingPosition)) {
+                    (light.getState() == LightState.RED && v.getPosition().y - v.getSpeed() >= stoppingPosition)) {
                         // System.out.println(stoppingPosition);
                         // System.out.println(v.getPosition().y);
                 v.setPosition(new Vec2(v.getPosition().x, v.getPosition().y - v.getSpeed()));

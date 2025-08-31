@@ -22,7 +22,7 @@ public class SouthLane extends BaseLane {
                 pv++;
             }
             if (light.getState() == LightState.GREEN || v.doz() ||
-                    (light.getState() == LightState.RED && v.getPosition().y <= stoppingPosition)) {
+                    (light.getState() == LightState.RED && v.getPosition().y + v.getSpeed()<= stoppingPosition)) {
                 v.setPosition(new Vec2(v.getPosition().x, v.getPosition().y + v.getSpeed()));
             }
         }

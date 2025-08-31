@@ -22,7 +22,7 @@ public class EastLane extends BaseLane {
                 pv++;
             }
             if (light.getState() == LightState.GREEN || v.doz() ||
-                    (light.getState() == LightState.RED && v.getPosition().x >= stoppingPosition)) {
+                    (light.getState() == LightState.RED && v.getPosition().x- v.getSpeed() >= stoppingPosition)) {
                 v.setPosition(new Vec2(v.getPosition().x - v.getSpeed(), v.getPosition().y));
             }
         }
