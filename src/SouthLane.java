@@ -17,7 +17,7 @@ public class SouthLane extends BaseLane {
         int pv = 0;
         for (int i = 0; i < vehicles.size(); i++) {
             Vehicle v = vehicles.get(i);
-            float stoppingPosition = light.getPosition().y + ((i - pv) * Vehicle.vehicleSize * 2);
+            float stoppingPosition = light.getPosition().y - ((i - pv) * Vehicle.vehicleSize * 2);
             if (v.doz()) {
                 pv++;
             }
