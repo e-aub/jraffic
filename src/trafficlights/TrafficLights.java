@@ -7,7 +7,6 @@ import java.util.Map;
 import vehicles.*;
 import routing.*;
 
-
 import processing.core.PApplet;
 import utils.Vec2;
 
@@ -55,14 +54,25 @@ public class TrafficLights {
                 || routes.getLane(turns.get(current_idx).getRoute()).vehicles.size() < 0) {
             return;
         }
+        TrafficLight currentLight = turns.get(current_idx);
 
+        int carCount = routes.getLane(currentLight.getRoute()).vehiclesCount();
+        int totalCars = turns.stream()
+                .mapToInt(l -> routes.getLane(l.getRoute()).vehiclesCount())
+                .sum();
+        boolean otherLanesHaveCars = totalCars - carCount > 0;
+
+        if (currentLight.getState() == LightState.GREEN && carCount == 0 && otherLanesHaveCars) {
+            for (TrafficLight light : turns) {
+                light.setState(LightState.RED);
+            }
+
+            calculatedTime = 1000;
+            all_red = true;
+            lastUpdate = now;
+            return;
+        }
         if (all_red) {
-            TrafficLight currentLight = turns.get(current_idx);
-
-            int carCount = routes.getLane(currentLight.getRoute()).vehiclesCount();
-            int totalCars = turns.stream()
-                    .mapToInt(l -> routes.getLane(l.getRoute()).vehiclesCount())
-                    .sum();
 
             calculatedTime = (carCount > 0) ? time * carCount / Math.max(1, totalCars) : 0;
 
