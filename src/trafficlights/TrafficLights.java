@@ -36,7 +36,7 @@ public class TrafficLights {
     private long lastUpdate;
     private long calculatedTime;
     private int current_idx = 4;
-    private int time = 5000;
+    private int time = 1500;
     private boolean all_red = true;
     private List<TrafficLight> turns;
 
@@ -67,7 +67,7 @@ public class TrafficLights {
                 light.setState(LightState.RED);
             }
 
-            calculatedTime = 1000;
+            calculatedTime = 100;
             all_red = true;
             lastUpdate = now;
             return;
@@ -87,7 +87,7 @@ public class TrafficLights {
             for (TrafficLight light : turns) {
                 light.setState(LightState.RED);
             }
-            calculatedTime = 1000;
+            calculatedTime = 300;
         }
 
         all_red = !all_red;
