@@ -1,5 +1,8 @@
 import processing.core.PApplet;
 import java.util.Random;
+import trafficlights.*;
+import routing.*;
+
 
 public class Jraffic extends PApplet {
     protected Routes routes;

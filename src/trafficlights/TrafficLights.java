@@ -1,9 +1,15 @@
+package trafficlights;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import vehicles.*;
+import routing.*;
+
 
 import processing.core.PApplet;
+import utils.Vec2;
 
 public class TrafficLights {
     private Map<Route, TrafficLight> lights = new HashMap<>();

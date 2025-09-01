@@ -1,4 +1,12 @@
+package lanes;
+
 import java.util.Iterator;
+
+import utils.Vec2;
+import trafficlights.*;
+import vehicles.*;
+import routing.*;
+
 
 public class NorthLane extends BaseLane {
     public NorthLane(float width, float height, TrafficLights trafficLights) {

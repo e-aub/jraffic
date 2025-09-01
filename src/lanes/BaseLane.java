@@ -1,10 +1,19 @@
+package lanes;
+
+import trafficlights.*;
+import vehicles.*;
+import routing.*;
+
+
 import processing.core.PApplet;
+import utils.Vec2;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseLane {
     public Vec2 spawnPosition;
-    protected List<Vehicle> vehicles = new ArrayList<>();
+    public List<Vehicle> vehicles = new ArrayList<>();
     public TrafficLights trafficLights;
     public final float width;
     public final float height;
@@ -82,9 +91,9 @@ public abstract class BaseLane {
         for (int i = 0; i < vehicles.size(); i++) {
             Vehicle v = vehicles.get(i);
             switch (v.getDirection()) {
-                case Right -> app.fill(0, 0, 255);
-                case Left -> app.fill(0, 255, 0);
-                case Straight -> app.fill(255, 255, 0);
+                case Right -> app.fill(0, 123, 127);
+                case Left -> app.fill(255, 166, 0);
+                case Straight -> app.fill(166, 123, 201);
             }
             float x = v.getPosition().x;
             float y = v.getPosition().y;

@@ -1,4 +1,5 @@
 BASE_DIR := $(shell pwd)
+JAVASOURCES := $(shell find src -name "*.java")
 
 .PHONY: clean dependencies javac java help
 
@@ -26,7 +27,8 @@ dependencies:
 javac: dependencies
 	@echo "Compiling sources..."
 	mkdir -p out
-	javac -cp lib/core.jar src/*.java -d out
+	javac -cp lib/core.jar -d out $(JAVASOURCES)
+
 
 java: javac
 	@echo "Running Jraffic..."

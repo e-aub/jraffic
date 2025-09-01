@@ -1,4 +1,11 @@
+package vehicles;
+
 import java.util.Random;
+
+import utils.Vec2;
+import routing.*;
+
+
 
 public class Vehicle {
     public final static Integer vehicleSize = 30;
