@@ -63,8 +63,8 @@ public class Routes {
             BaseLane lane = lanes.get(i);
             // System.out.println("Updating lane " + i + ": " +
             // lane.getClass().getSimpleName());
-            lane.updateVehicles();
-            lane.handleTurns(this);
+            lane.advanceVehicles();
+            lane.TurnVehicles(this);
         }
         // Here we should delete the turning logic and implement for each lane its
         // turning logic;

@@ -14,7 +14,7 @@ public class EastLane extends BaseLane {
     }
 
     @Override
-    public void updateVehicles() {
+    public void advanceVehicles() {
         TrafficLight light = trafficLights.getLight(Route.East);
         int pv = 0;
         for (int i = 0; i < vehicles.size(); i++) {
@@ -31,7 +31,7 @@ public class EastLane extends BaseLane {
     }
 
     @Override
-    public void handleTurns(Routes routes){
+    public void TurnVehicles(Routes routes){
         Iterator<Vehicle> it = this.vehicles.iterator();
         while (it.hasNext()) {
             Vehicle v = it.next();

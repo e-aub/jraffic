@@ -70,9 +70,9 @@ public abstract class BaseLane {
 
     public abstract void spawnVehicle();
 
-    public abstract void updateVehicles();
+    public abstract void advanceVehicles();
 
-    public abstract void handleTurns(Routes routes);
+    public abstract void TurnVehicles(Routes routes);
 
     public void receiveVehicle(Vehicle v) {
         vehicles.add(v);

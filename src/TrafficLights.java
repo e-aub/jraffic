@@ -10,13 +10,18 @@ public class TrafficLights {
 
     public TrafficLights(Integer width, Integer height) {
         lights.put(Route.North,
-                new TrafficLight(new Vec2((width / 2) + Vehicle.vehicleSize, (height / 2) + Vehicle.vehicleSize), LightState.RED, Route.North));
+                new TrafficLight(new Vec2((width / 2) + Vehicle.vehicleSize, (height / 2) + Vehicle.vehicleSize),
+                        LightState.RED, Route.North));
         lights.put(Route.South,
-                new TrafficLight(new Vec2((width / 2) - Vehicle.vehicleSize*2, (height / 2) - Vehicle.vehicleSize*2), LightState.RED, Route.South));
+                new TrafficLight(
+                        new Vec2((width / 2) - Vehicle.vehicleSize * 2, (height / 2) - Vehicle.vehicleSize * 2),
+                        LightState.RED, Route.South));
         lights.put(Route.East,
-                new TrafficLight(new Vec2((width / 2) + Vehicle.vehicleSize, (height / 2) - Vehicle.vehicleSize*2), LightState.RED, Route.East));
+                new TrafficLight(new Vec2((width / 2) + Vehicle.vehicleSize, (height / 2) - Vehicle.vehicleSize * 2),
+                        LightState.RED, Route.East));
         lights.put(Route.West,
-                new TrafficLight(new Vec2((width / 2) - Vehicle.vehicleSize*2, (height / 2) + Vehicle.vehicleSize), LightState.RED, Route.West));
+                new TrafficLight(new Vec2((width / 2) - Vehicle.vehicleSize * 2, (height / 2) + Vehicle.vehicleSize),
+                        LightState.RED, Route.West));
     }
 
     public Map<Route, TrafficLight> getLights() {
@@ -24,42 +29,53 @@ public class TrafficLights {
     }
 
     private long lastUpdate;
-    private long claculatedTime;
+    private long calculatedTime;
     private int current_idx = 4;
-    private int time = 1100;
+    private int time = 5000;
     private boolean all_red = true;
     private List<TrafficLight> turns;
 
     public void update(Routes routes) {
-        if (current_idx == 4) {
-            turns = new ArrayList<>();
-            getLights().values().forEach((v) -> {
-                turns.add(v);
-            });
-            current_idx = 0;
-        } else if ((System.currentTimeMillis() - lastUpdate) >= claculatedTime) {
-            if (all_red) {
-                TrafficLight currentLight = turns.get(current_idx);
-                int carCount = routes.getLane(currentLight.getRoute()).vehiclesCount();
-                int[] all_cars = new int[] { 0 };
-                turns.forEach(t -> {
-                    all_cars[0] += routes.getLane(t.getRoute()).vehiclesCount();
-                });
-                claculatedTime = time * carCount / ((all_cars[0] == 0) ? 1 : all_cars[0]);
-                current_idx++;
-                turns.forEach(l -> {
-                    l.setState((claculatedTime != 0 && l.equals(currentLight)) ? LightState.GREEN : LightState.RED);
-                });
-            } else if (claculatedTime!=0) {
-                turns.forEach(l -> {
-                    l.setState(LightState.RED);
-                });
-                claculatedTime = 100;
-            }
-            all_red = !all_red;
-            lastUpdate = System.currentTimeMillis();
+        long now = System.currentTimeMillis();
 
+        if (turns == null) {
+            turns = new ArrayList<>(lights.values());
+            current_idx = 0;
+            lastUpdate = now;
+            all_red = true;
         }
+
+        if (now - lastUpdate < calculatedTime
+                || routes.getLane(turns.get(current_idx).getRoute()).vehicles.size() < 0) {
+            return;
+        }
+
+        if (all_red) {
+            TrafficLight currentLight = turns.get(current_idx);
+
+            int carCount = routes.getLane(currentLight.getRoute()).vehiclesCount();
+            int totalCars = turns.stream()
+                    .mapToInt(l -> routes.getLane(l.getRoute()).vehiclesCount())
+                    .sum();
+
+            calculatedTime = (carCount > 0) ? time * carCount / Math.max(1, totalCars) : 0;
+
+            for (TrafficLight light : turns) {
+                light.setState(light.equals(currentLight) && calculatedTime > 0
+                        ? LightState.GREEN
+                        : LightState.RED);
+            }
+
+            current_idx = (current_idx + 1) % turns.size();
+        } else {
+            for (TrafficLight light : turns) {
+                light.setState(LightState.RED);
+            }
+            calculatedTime = 1000;
+        }
+
+        all_red = !all_red;
+        lastUpdate = now;
     }
 
     public TrafficLight getLight(Route route) {
@@ -93,7 +109,8 @@ public class TrafficLights {
             } else {
                 app.fill(0, 255, 0);
             }
-            app.rect((float) light.getPosition().x, (float) light.getPosition().y, Vehicle.vehicleSize, Vehicle.vehicleSize);
+            app.rect((float) light.getPosition().x, (float) light.getPosition().y, Vehicle.vehicleSize,
+                    Vehicle.vehicleSize);
         }
     }
 
