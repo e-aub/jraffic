@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class SouthLane extends BaseLane {
     public SouthLane(float width, float height, TrafficLights trafficLights) {
         super(width, height, trafficLights);
@@ -24,6 +26,28 @@ public class SouthLane extends BaseLane {
             if (light.getState() == LightState.GREEN || v.doz() ||
                     (light.getState() == LightState.RED && v.getPosition().y + v.getSpeed()<= stoppingPosition)) {
                 v.setPosition(new Vec2(v.getPosition().x, v.getPosition().y + v.getSpeed()));
+            }
+        }
+    }
+
+    @Override
+    public void handleTurns(Routes routes) {
+        Iterator<Vehicle> it = this.vehicles.iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().y == 700/2 - Vehicle.vehicleSize) {
+                    v.setTurned(true);
+                    it.remove();
+                    routes.getLane(Route.East).receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 700/2) {
+                    v.setTurned(true);
+                    it.remove();
+                    routes.getLane(Route.West).receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().y > height + Vehicle.vehicleSize) {
+                it.remove();
             }
         }
     }

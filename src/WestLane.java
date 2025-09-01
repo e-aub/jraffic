@@ -1,3 +1,5 @@
+import java.util.Iterator;
+
 public class WestLane extends BaseLane {
     public WestLane(float width, float height, TrafficLights trafficLights) {
         super(width, height, trafficLights);
@@ -37,6 +39,28 @@ public class WestLane extends BaseLane {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void handleTurns(Routes routes) {
+        Iterator<Vehicle> it = this.vehicles.iterator();
+        while (it.hasNext()) {
+            Vehicle v = it.next();
+            if (!v.hasTurned()) {
+                if (v.getDirection() == Direction.Right && v.getPosition().x == width/2 - Vehicle.vehicleSize) {
+                    v.setTurned(true);
+                    it.remove();
+                    routes.getLane(Route.South).receiveVehicle(v);
+                } else if (v.getDirection() == Direction.Left && v.getPosition().x == width/2 ) {
+                    v.setTurned(true);
+                    it.remove();
+                    routes.getLane(Route.North).receiveVehicle(v);
+                }
+            }
+            if (v.getPosition().x < Vehicle.vehicleSize * -1) {
+                it.remove();
+            }
         }
     }
 }

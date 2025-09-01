@@ -40,10 +40,10 @@ public class TrafficLights {
         } else if ((System.currentTimeMillis() - lastUpdate) >= claculatedTime) {
             if (all_red) {
                 TrafficLight currentLight = turns.get(current_idx);
-                int carCount = routes.getBaseLane(currentLight.getRoute()).vehiclesCount();
+                int carCount = routes.getLane(currentLight.getRoute()).vehiclesCount();
                 int[] all_cars = new int[] { 0 };
                 turns.forEach(t -> {
-                    all_cars[0] += routes.getBaseLane(t.getRoute()).vehiclesCount();
+                    all_cars[0] += routes.getLane(t.getRoute()).vehiclesCount();
                 });
                 claculatedTime = time * carCount / ((all_cars[0] == 0) ? 1 : all_cars[0]);
                 current_idx++;

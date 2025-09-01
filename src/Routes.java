@@ -23,7 +23,7 @@ public class Routes {
         lanes = Arrays.asList(northLane, southLane, westLane, eastLane);
     }
 
-    public BaseLane getBaseLane(Route r) {
+    public BaseLane getLane(Route r) {
         switch (r) {
             case South:
                 return southLane;
@@ -64,85 +64,10 @@ public class Routes {
             // System.out.println("Updating lane " + i + ": " +
             // lane.getClass().getSimpleName());
             lane.updateVehicles();
+            lane.handleTurns(this);
         }
         // Here we should delete the turning logic and implement for each lane its
         // turning logic;
-
-        Iterator<Vehicle> it = northLane.getVehicles().iterator();
-        while (it.hasNext()) {
-            Vehicle v = it.next();
-            if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().y ==700 / 2) {
-                    v.setTurned(true);
-                    it.remove();
-                    westLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 700/2 - Vehicle.vehicleSize) {
-                    v.setTurned(true);
-                    it.remove();
-                    eastLane.receiveVehicle(v);
-                }
-            }
-            if (v.getPosition().y < Vehicle.vehicleSize * -1) {
-                it.remove();
-            }
-        }
-
-        it = southLane.getVehicles().iterator();
-        while (it.hasNext()) {
-            Vehicle v = it.next();
-            if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().y == 700/2 - Vehicle.vehicleSize) {
-                    v.setTurned(true);
-                    it.remove();
-                    eastLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().y == 700/2) {
-                    v.setTurned(true);
-                    it.remove();
-                    westLane.receiveVehicle(v);
-                }
-            }
-            if (v.getPosition().y > height + Vehicle.vehicleSize) {
-                it.remove();
-            }
-        }
-
-        it = eastLane.getVehicles().iterator();
-        while (it.hasNext()) {
-            Vehicle v = it.next();
-            if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().x == width/2 ) {
-                    v.setTurned(true);
-                    it.remove();
-                    northLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().x == width/2 - Vehicle.vehicleSize) {
-                    v.setTurned(true);
-                    it.remove();
-                    southLane.receiveVehicle(v);
-                }
-            }
-            if (v.getPosition().x > width + Vehicle.vehicleSize) {
-                it.remove();
-            }
-        }
-
-        it = westLane.getVehicles().iterator();
-        while (it.hasNext()) {
-            Vehicle v = it.next();
-            if (!v.hasTurned()) {
-                if (v.getDirection() == Direction.Right && v.getPosition().x == width/2 - Vehicle.vehicleSize) {
-                    v.setTurned(true);
-                    it.remove();
-                    southLane.receiveVehicle(v);
-                } else if (v.getDirection() == Direction.Left && v.getPosition().x == width/2 ) {
-                    v.setTurned(true);
-                    it.remove();
-                    northLane.receiveVehicle(v);
-                }
-            }
-            if (v.getPosition().x < Vehicle.vehicleSize * -1) {
-                it.remove();
-            }
-        }
     }
 
     public void draw(PApplet app) {
